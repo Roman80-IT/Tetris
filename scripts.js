@@ -9,3 +9,5 @@ function generatePlayfield() {
     document.querySelector(".tetris").append(div);
   }
 }
+
+generatePlayfield();

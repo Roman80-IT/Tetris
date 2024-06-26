@@ -234,12 +234,6 @@ function generatePlayfield() {
     const div = document.createElement("div");
     document.querySelector(".tetris").append(div); // Створення елементів div для ігрового поля
   }
-
-  playfield = new Array(PLAYFILED_ROWS)
-    .fill()
-    .map(() => new Array(PLAYFILED_COLUMNS).fill(0)); // Створення двовимірного масиву для ігрового поля
-
-  console.table(playfield); // Виведення ігрового поля в консоль
 }
 ```
 
@@ -315,3 +309,22 @@ document.body.appendChild(div); // Додається новий <div> до ті
 Отже, новий div з текстом `"New Tetris Block"` додається всередину елемента з класом `tetris`.
 
 ---
+
+Визвемо цю функцію для генерації `div`:
+`generatePlayfield();`
+
+Весь код тепер має вигляд:
+
+```js
+const PLAYFILED_COLUMNS = 10;
+const PLAYFILED_ROWS = 20;
+
+function generatePlayfield() {
+  for (let i = 0; i < PLAYFILED_COLUMNS * PLAYFILED_ROWS; i++) {
+    const div = document.createElement("div");
+    document.querySelector(".tetris").append(div);
+  }
+}
+
+generatePlayfield();
+```
