@@ -217,5 +217,101 @@ inset: робить тінь внутрішньою.
   Наберемо у файлі `.js` команду `alert()` і в браузері маємо отримати вспливаюче вікно.<br>
   Витираємо, це просто перевірка!
 
-- Пропишемо константи
+- Пропишемо константи:
+
+```js
+const PLAYFILED_COLUMNS = 10; // Кількість колонок у ігровому полі
+const PLAYFILED_ROWS = 20; // Кількість рядків у ігровому полі
+```
+
 - Тетраміно — геометричні фігури Тетрісу, що складаються з чотирьох квадратів, з'єднаних сторонами у вигляді букв I, J, L, O, S, T, Z
+
+- Створимо функцію для генерації ігрового поля:
+
+```js
+function generatePlayfield() {
+  for (let i = 0; i < PLAYFILED_COLUMNS * PLAYFILED_ROWS; i++) {
+    const div = document.createElement("div");
+    document.querySelector(".tetris").append(div); // Створення елементів div для ігрового поля
+  }
+
+  playfield = new Array(PLAYFILED_ROWS)
+    .fill()
+    .map(() => new Array(PLAYFILED_COLUMNS).fill(0)); // Створення двовимірного масиву для ігрового поля
+
+  console.table(playfield); // Виведення ігрового поля в консоль
+}
+```
+
+---
+
+### `const div = document.createElement('div');`
+
+створюється новий елемент `div` у документі. Ця команда використовується для створення нового HTML-елемента в пам'яті, який потім можна додати до документу або маніпулювати ним перед додаванням.<br>
+
+Детальніше:
+
+`document`: Об'єкт, який представляє весь **HTML-документ**. Він надає доступ до елементів сторінки і дозволяє маніпулювати ними.<br>
+`createElement('div')`: Метод об'єкта `document`, який створює новий елемент типу, вказаного в дужках. У цьому випадку створюється елемент `div`.<br>
+`const div`: Змінна, яка оголошується за допомогою `const` і використовується для зберігання посилання на створений елемент `div`.<br>
+Після створення елемента `div`, його можна додати до **DOM** (Document Object Model) або змінити його властивості (такі як id, class, textContent тощо).<br>
+
+**_Приклад використання:_**
+
+```js
+const div = document.createElement("div"); // Створюється новий елемент <div>
+div.textContent = "Hello, World!"; // Додається текст в елемент <div>
+document.body.appendChild(div); // Додається новий <div> до тіла документа (document.body)
+```
+
+У цьому прикладі створений елемент `div` додається до тіла **HTML-документа** і відображає текст `"Hello, World!"`.
+
+### `document.querySelector('.tetris').append(div);`
+
+означає, що створений елемент `div` додається до елемента з класом `tetris` в **DOM**.<br>
+
+Детальніше:
+
+`document`: Об'єкт, що представляє весь **HTML-документ**. Він надає доступ до елементів сторінки і дозволяє маніпулювати ними.<br>
+`querySelector('.tetris')`: Метод об'єкта `document`, який повертає перший елемент, що відповідає CSS-селектору. У цьому випадку це перший елемент з класом `tetris`.<br>
+`.append(div)`: Метод, який додає (вставляє) вказаний елемент (`div`) як останню дитину до вибраного елемента.<br>
+
+Таким чином, весь запис виконує наступні дії:
+
+Використовує `document.querySelector('.tetris')` для вибору першого елемента з класом `tetris` в документі.
+Додає створений елемент div як останню дитину вибраного елемента з класом `tetris`.
+
+**_Приклад HTML-документа і застосування цього коду:_**
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Example</title>
+  </head>
+  <body>
+    <div class="tetris"></div>
+
+    <script>
+      // JavaScript code
+      const div = document.createElement("div"); // Створюється новий елемент <div>
+      div.textContent = "New Tetris Block"; // Додається текст в елемент <div>
+      document.querySelector(".tetris").append(div); // Додається новий <div> до елемента з класом "tetris"
+    </script>
+  </body>
+</html>
+```
+
+Після виконання цього коду, **HTML-структура** буде виглядати так:
+
+```html
+<div class="tetris">
+  <div>New Tetris Block</div>
+</div>
+```
+
+Отже, новий div з текстом `"New Tetris Block"` додається всередину елемента з класом `tetris`.
+
+---
