@@ -217,16 +217,14 @@ inset: робить тінь внутрішньою.
   Наберемо у файлі `.js` команду `alert()` і в браузері маємо отримати вспливаюче вікно.<br>
   Витираємо, це просто перевірка!
 
-- Пропишемо константи:
+#### Пропишемо константи:
 
 ```js
 const PLAYFILED_COLUMNS = 10; // Кількість колонок у ігровому полі
 const PLAYFILED_ROWS = 20; // Кількість рядків у ігровому полі
 ```
 
-- Тетраміно — геометричні фігури Тетрісу, що складаються з чотирьох квадратів, з'єднаних сторонами у вигляді букв I, J, L, O, S, T, Z
-
-- Створимо функцію для генерації ігрового поля:
+#### Створимо функцію для генерації ігрового поля:
 
 ```js
 function generatePlayfield() {
@@ -239,7 +237,7 @@ function generatePlayfield() {
 
 ---
 
-### `const div = document.createElement('div');`
+**`const div = document.createElement('div');`**
 
 створюється новий елемент `div` у документі. Ця команда використовується для створення нового HTML-елемента в пам'яті, який потім можна додати до документу або маніпулювати ним перед додаванням.<br>
 
@@ -250,7 +248,7 @@ function generatePlayfield() {
 `const div`: Змінна, яка оголошується за допомогою `const` і використовується для зберігання посилання на створений елемент `div`.<br>
 Після створення елемента `div`, його можна додати до **DOM** (Document Object Model) або змінити його властивості (такі як id, class, textContent тощо).<br>
 
-**_Приклад використання:_**
+**_Інший приклад використання:_**
 
 ```js
 const div = document.createElement("div"); // Створюється новий елемент <div>
@@ -260,7 +258,7 @@ document.body.appendChild(div); // Додається новий <div> до ті
 
 У цьому прикладі створений елемент `div` додається до тіла **HTML-документа** і відображає текст `"Hello, World!"`.
 
-### `document.querySelector('.tetris').append(div);`
+**`document.querySelector('.tetris').append(div);`**
 
 означає, що створений елемент `div` додається до елемента з класом `tetris` в **DOM**.<br>
 
@@ -315,6 +313,8 @@ document.body.appendChild(div); // Додається новий <div> до ті
 
 Весь код тепер має вигляд:
 
+**_STEP-1:_**
+
 ```js
 const PLAYFILED_COLUMNS = 10;
 const PLAYFILED_ROWS = 20;
@@ -327,4 +327,88 @@ function generatePlayfield() {
 }
 
 generatePlayfield();
+```
+
+#### Стилі для створених елементів `div` в загальному контейнері класу `.tetris`:
+
+```css
+.tetris {
+  border: 5px solid orange;
+  display: grid;
+  grid-template-columns: repeat(
+    10,
+    auto
+  ); /* визначає шаблон колонок у сітці. В даному випадку використовується функція `repeat`, яка створює 10 колонок, причому кожна колонка буде мати розмір, визначений автоматично (залежно від вмісту) */
+}
+```
+
+#### Створюємо масив імен тетраміно:
+
+```js
+const TETROMINO_NAMES = ["O", "L"];
+```
+
+!!! Тетраміно — геометричні фігури **Тетрісу**, що складаються з чотирьох квадратів, з'єднаних сторонами у вигляді букв I, J, L, O, S, T, Z !!!
+
+#### Створюємо об'єкт, що зберігає фігури тетроміно (їх матриці)
+
+```js
+const TETROMINOES = {
+  O: [[1]],
+  L: [[1]],
+};
+```
+
+---
+
+**Матриця**
+
+В контексті гри Тетріс, матриця використовується для представлення форми тетроміно (ігрової фігури) і її позиції на ігровому полі.
+
+---
+
+#### Функція генерації нового тетроміно (на полі):
+
+```js
+function generateTetromino() {
+  const nameTetro = TETROMINO_NAMES[0]; // Вибір імені тетроміно (тут, для прикладу, поки зафіксуємо вибір першого елементу)
+  const matrix = TETROMINOES[0]; // Вибір матриці тетроміно
+
+  const columnTetro = 4; // Початкове розміщення фігури - колонка для тетроміно
+  const rowTetro = 5; //                             - рядок для тетромі
+}
+```
+
+Код тепер має вигляд:
+
+**_STEP-2:_**
+
+```js
+const PLAYFILED_COLUMNS = 10;
+const PLAYFILED_ROWS = 20;
+
+const TETROMINO_NAMES = ["O", "L"];
+
+const TETROMINOES = {
+  O: [[1]],
+  L: [[1]],
+};
+
+function generatePlayfield() {
+  for (let i = 0; i < PLAYFILED_COLUMNS * PLAYFILED_ROWS; i++) {
+    const div = document.createElement("div");
+    document.querySelector(".tetris").append(div);
+  }
+}
+
+function generateTetromino() {
+  const nameTetro = TETROMINO_NAMES[0]; // Вибір імені тетроміно (поки зафіксуємо вибір першого елементу)
+  const matrix = TETROMINOES[0]; // Вибір матриці тетроміно
+
+  const columnTetro = 4; // Початкове розміщення фігури - колонка для тетроміно
+  const rowTetro = 5; //                             - рядок для тетромі
+}
+
+generatePlayfield();
+generateTetromino();
 ```
