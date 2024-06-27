@@ -367,7 +367,7 @@ const TETROMINOES = {
 
 ---
 
-#### Функція генерації нового тетроміно (на полі):
+#### Функція генерування нового тетроміно (на полі):
 
 ```js
 function generateTetromino() {
@@ -376,6 +376,54 @@ function generateTetromino() {
 
   const columnTetro = 4; // Початкове розміщення фігури - колонка для тетроміно
   const rowTetro = 5; //                             - рядок для тетромі
+}
+```
+
+Ініціалізуємо **Об'єкт для тетроміно** з порожніми (або нульовими значеннями), щоб забезпечити наявність всіх необхідних властивостей.
+Пропишемо це на початку, під константами
+
+```js
+let tetromino = {
+  name: "",
+  matrix: [],
+  column: 0,
+  row: 0,
+};
+```
+
+У функції `generateTetromino` об'єкт `tetromino` заповнюється відповідними значеннями, зокрема іменем, матрицею форми та початковими координатами на ігровому полі:
+
+```js
+function generateTetromino() {
+  const nameTetro = TETROMINO_NAMES[0];
+  const matrix = TETROMINOES[0];
+
+  const columnTetro = 4;
+  const rowTetro = 5;
+
+  tetromino = {
+    name: nameTetro,
+    matrix: matrix,
+    column: columnTetro,
+    row: rowTetro,
+  };
+}
+```
+
+#### Функція для малювання ігрового поля
+
+```js
+function drawPlayfield() {
+  playfield[7][6] = "O"; // Встановлення значення 'O' в конкретну клітинку поля
+  for (let row = 0; row < PLAYFILED_ROWS; row++) {
+    for (let column = 0; column < PLAYFILED_COLUMNS; column++) {
+      if (!playfield[row][column]) continue; // Пропуск порожніх клітинок
+      const nameFigure = "L"; // Встановлення імені фігури (завжди 'L', можливо помилка)
+      const cellIndex = convertPositionToIndex(row, column); // Конвертація позиції в індекс
+
+      cells[cellIndex].classList.add(nameFigure); // Додавання класу до відповідного елемента
+    }
+  }
 }
 ```
 
@@ -405,8 +453,8 @@ function generateTetromino() {
   const nameTetro = TETROMINO_NAMES[0]; // Вибір імені тетроміно (поки зафіксуємо вибір першого елементу)
   const matrix = TETROMINOES[0]; // Вибір матриці тетроміно
 
-  const columnTetro = 4; // Початкове розміщення фігури - колонка для тетроміно
-  const rowTetro = 5; //                             - рядок для тетромі
+  const columnTetro = 4; // Початкове розміщення фігури - колонка
+  const rowTetro = 5; //                                - рядок
 }
 
 generatePlayfield();
