@@ -34,11 +34,15 @@ function drawPlayfield() {
   for (let row = 0; row < PLAYFILED_ROWS; row++) {
     for (let column = 0; column < PLAYFILED_COLUMNS; column++) {
       const nameFigure = "O"; //! Тимчасово захардкодимо
-      const cellIndex = 43; //! Тимчасово захардкодимо
+      const cellIndex = convertPositionToIndex(row, column);
 
       cells[cellIndex].classList.add(nameFigure);
     }
   }
+}
+
+function convertPositionToIndex(row, col) {
+  return row * PLAYFILED_COLUMNS + col;
 }
 
 function generatePlayfield() {
