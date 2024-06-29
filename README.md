@@ -113,7 +113,7 @@ body {
 
 Натискаємо на квадратик перед `lightgrey` (у VSC) і у вікні, яке з'явиться можемо змінити колір або просто встановити прозорість: `background: rgba(211, 211, 211, 0.4);`
 
-Продовжуємо писати стиль до цього елемента (з поясненням):
+Продовжуємо писати стиль до цього елемента:
 
 ```css
 .tetris div {
@@ -214,7 +214,7 @@ function generatePlayfield() {
 
 Весь код тепер має вигляд:
 
-**_STEP-1:_**
+**_Код до STEP-1:_**
 
 ```js
 const PLAYFILED_COLUMNS = 10;
@@ -313,7 +313,7 @@ function generateTetromino() {
 }
 ```
 
-**_STEP-2:_**
+**_Код до STEP-2:_**
 
 ```js
 const PLAYFILED_COLUMNS = 10;
@@ -428,7 +428,7 @@ function drawPlayfield() {
   Класовий селектор (наприклад, `.O`) має вищу специфічність.
   Комбінований класовий селектор (наприклад, `.tetris .O`) має ще вищу специфічність.
 
-**_STEP-3:_**
+**_Код до STEP-3:_**
 
 ```js
 const PLAYFILED_COLUMNS = 10;
@@ -558,7 +558,7 @@ function generatePlayfield() {
 
 ##### Зміни у функції для малювання ігрового поля `drawPlayfield`
 
-[Перша версія функції](#Функція для малювання ігрового поля)
+[Перша версія функції](#функція-для-малювання-ігрового-поля)
 
 ```js
 function drawPlayfield() {
@@ -627,6 +627,81 @@ cells[cellIndex].classList.add(nameFigure);
 
 Встановлюється фіксоване ім'я фігури "L". Це ім'я буде використовуватися для додавання відповідного класу до комірок, які містять фігури.<br>
 Всі комірки, які містять фігури (в даному випадку тільки комірка на позиції (7, 6)), отримають клас "L".
+
+**_Код до STEP-4:_**
+
+```js
+const PLAYFILED_COLUMNS = 10;
+const PLAYFILED_ROWS = 20;
+let playfield;
+
+const TETROMINO_NAMES = ["O", "L"];
+
+const TETROMINOES = {
+  O: [[1]],
+  L: [[1]],
+};
+
+let tetromino = {
+  name: "",
+  matrix: [],
+  column: 0,
+  row: 0,
+};
+
+function generateTetromino() {
+  const nameTetro = TETROMINO_NAMES[0]; // Вибір імені тетроміно (поки зафіксуємо вибір першого елементу)
+  const matrix = TETROMINOES[0]; // Вибір матриці тетроміно
+
+  const columnTetro = 4; // Початкове розміщення фігури - колонка
+  const rowTetro = 5; //                                - рядок
+
+  tetromino = {
+    name: nameTetro,
+    matrix: matrix,
+    column: columnTetro,
+    row: rowTetro,
+  };
+}
+
+function convertPositionToIndex(row, col) {
+  return row * PLAYFILED_COLUMNS + col;
+}
+
+function drawPlayfield() {
+  playfield[7][6] = "O";
+  for (let row = 0; row < PLAYFILED_ROWS; row++) {
+    for (let column = 0; column < PLAYFILED_COLUMNS; column++) {
+      if (!playfield[row][column]) continue;
+      const nameFigure = "L"; //! Тимчасово захардкодимо та ще й невідповідною фігурою
+      const cellIndex = convertPositionToIndex(row, column);
+
+      cells[cellIndex].classList.add(nameFigure);
+    }
+  }
+}
+
+function generatePlayfield() {
+  for (let i = 0; i < PLAYFILED_COLUMNS * PLAYFILED_ROWS; i++) {
+    const div = document.createElement("div");
+    document.querySelector(".tetris").append(div);
+  }
+
+  playfield = new Array(PLAYFILED_ROWS)
+    .fill()
+    .map(() => new Array(PLAYFILED_COLUMNS).fill(0));
+
+  console.table(playfield);
+}
+
+generatePlayfield();
+let cells = document.querySelectorAll(".tetris div");
+generateTetromino();
+
+drawPlayfield();
+```
+
+#### STEP-5
 
 ---
 
