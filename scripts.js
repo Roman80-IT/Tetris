@@ -1,5 +1,6 @@
 const PLAYFILED_COLUMNS = 10;
 const PLAYFILED_ROWS = 20;
+let playfield;
 
 const TETROMINO_NAMES = ["O", "L"];
 
@@ -30,10 +31,16 @@ function generateTetromino() {
   };
 }
 
+function convertPositionToIndex(row, col) {
+  return row * PLAYFILED_COLUMNS + col;
+}
+
 function drawPlayfield() {
+  playfield[7][6] = "O";
   for (let row = 0; row < PLAYFILED_ROWS; row++) {
     for (let column = 0; column < PLAYFILED_COLUMNS; column++) {
-      const nameFigure = "O"; //! Тимчасово захардкодимо
+      if (!playfield[row][column]) continue;
+      const nameFigure = "L"; //! Тимчасово захардкодимо та ще й невідповідною фігурою
       const cellIndex = convertPositionToIndex(row, column);
 
       cells[cellIndex].classList.add(nameFigure);
@@ -41,15 +48,17 @@ function drawPlayfield() {
   }
 }
 
-function convertPositionToIndex(row, col) {
-  return row * PLAYFILED_COLUMNS + col;
-}
-
 function generatePlayfield() {
   for (let i = 0; i < PLAYFILED_COLUMNS * PLAYFILED_ROWS; i++) {
     const div = document.createElement("div");
     document.querySelector(".tetris").append(div);
   }
+
+  playfield = new Array(PLAYFILED_ROWS)
+    .fill()
+    .map(() => new Array(PLAYFILED_COLUMNS).fill(0));
+
+  console.table(playfield);
 }
 
 generatePlayfield();
