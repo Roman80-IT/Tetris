@@ -60,8 +60,27 @@ function generatePlayfield() {
   console.table(playfield);
 }
 
+function drawTetromino() {
+  const name = tetromino.name;
+  const tetrominoMatrixSize = tetromino.matrix.length;
+
+  for (let row = 0; row < tetrominoMatrixSize; row++) {
+    for (let column = 0; column < tetrominoMatrixSize; column++) {
+      if (!tetromino.matrix[row][column]) {
+        continue;
+      }
+      const cellIndex = convertPositionToIndex(
+        tetromino.row + row,
+        tetromino.column + column
+      );
+      cells[cellIndex].classList.add(name); // Додаємо клас для клітинок, що відповідають активному тетроміно
+    }
+  }
+}
+
 generatePlayfield();
 let cells = document.querySelectorAll(".tetris div");
 generateTetromino();
 
 drawPlayfield();
+drawTetromino();
