@@ -773,7 +773,7 @@ function drawTetromino() {
   for (let row = 0; row < tetrominoMatrixSize; row++) {
     for (let column = 0; column < tetrominoMatrixSize; column++) {
       if (!tetromino.matrix[row][column]) {
-        continue; //         Пропуск пустих клітинок
+        continue; //         Пропуск пустих клітинок - інакше відмалюється вся матриця (3х3 наприклад)
       }
       const cellIndex = convertPositionToIndex(
         tetromino.row + row,
@@ -860,6 +860,50 @@ const cellIndex = convertPositionToIndex(
 - `drawTetromino` може викликатися частіше, кожного разу при переміщенні активного тетроміно, щоб відобразити його нову позицію.<br><br>
 
 ---
+
+##### Нові тетроміно
+
+```js
+const TETROMINO_NAMES = ["O", "L", "J", "S", "Z", "I", "T"];
+
+const TETROMINOES = {
+  O: [
+    [1, 1],
+    [1, 1],
+  ],
+  L: [
+    [0, 0, 1],
+    [1, 1, 1],
+    [0, 0, 0],
+  ],
+  J: [
+    [0, 1, 1],
+    [0, 1, 0],
+    [0, 1, 0],
+  ],
+  S: [
+    [0, 1, 1],
+    [1, 1, 0],
+    [0, 0, 0],
+  ],
+  Z: [
+    [1, 1, 0],
+    [0, 1, 1],
+    [0, 0, 0],
+  ],
+  I: [
+    [0, 0, 0, 0],
+    [1, 1, 1, 1],
+    [0, 0, 0, 0],
+    [0, 0, 0, 0],
+  ],
+  T: [
+    [1, 1, 1],
+    [0, 1, 0],
+    [0, 0, 0],
+  ],
+};
+```
 
 <br>
 
