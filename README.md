@@ -695,7 +695,28 @@ generateTetromino();
 drawPlayfield();
 ```
 
-#### STEP-5
+#### STEP-5 / Lesson-2
+
+##### Виправлення помилки у Функції генерування нового тетроміно:
+
+`const matrix = TETROMINOES[`O`];` замість `const matrix = TETROMINOES[0];`
+
+```js
+function generateTetromino() {
+  const nameTetro = TETROMINO_NAMES[0]; // Вибір імені тетроміно (поки зафіксуємо вибір першого елементу)
+  const matrix = TETROMINOES[`O`]; // Вибір матриці тетроміно
+
+  const columnTetro = 4; // Початкове розміщення фігури - колонка
+  const rowTetro = 5; //                                - рядок
+
+  tetromino = {
+    name: nameTetro,
+    matrix: matrix,
+    column: columnTetro,
+    row: rowTetro,
+  };
+}
+```
 
 ---
 

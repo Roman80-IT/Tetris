@@ -31,10 +31,6 @@ function generateTetromino() {
   };
 }
 
-function convertPositionToIndex(row, col) {
-  return row * PLAYFILED_COLUMNS + col;
-}
-
 function drawPlayfield() {
   playfield[7][6] = "O";
   for (let row = 0; row < PLAYFILED_ROWS; row++) {
@@ -46,6 +42,10 @@ function drawPlayfield() {
       cells[cellIndex].classList.add(nameFigure);
     }
   }
+}
+
+function convertPositionToIndex(row, col) {
+  return row * PLAYFILED_COLUMNS + col;
 }
 
 function generatePlayfield() {
