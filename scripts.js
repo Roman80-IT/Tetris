@@ -18,7 +18,7 @@ let tetromino = {
 
 function generateTetromino() {
   const nameTetro = TETROMINO_NAMES[0]; // Вибір імені тетроміно (поки зафіксуємо вибір першого елементу)
-  const matrix = TETROMINOES[0]; // Вибір матриці тетроміно
+  const matrix = TETROMINOES[`O`]; // Вибір матриці тетроміно // Вибір матриці тетроміно
 
   const columnTetro = 4; // Початкове розміщення фігури - колонка
   const rowTetro = 5; //                                - рядок
@@ -32,11 +32,10 @@ function generateTetromino() {
 }
 
 function drawPlayfield() {
-  playfield[7][6] = "O";
   for (let row = 0; row < PLAYFILED_ROWS; row++) {
     for (let column = 0; column < PLAYFILED_COLUMNS; column++) {
       if (!playfield[row][column]) continue;
-      const nameFigure = "L"; //! Тимчасово захардкодимо та ще й невідповідною фігурою
+      const nameFigure = "O"; //! змінили захардкоджене значення на "O"
       const cellIndex = convertPositionToIndex(row, column);
 
       cells[cellIndex].classList.add(nameFigure);

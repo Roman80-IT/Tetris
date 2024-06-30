@@ -697,6 +697,26 @@ drawPlayfield();
 
 #### STEP-5 / Lesson-2
 
+**Загальні зміни:**
+
+- 1. **нові тетроміно**:<br>
+     (J, S, Z, I, T) до масиву `TETROMINO_NAMES` і відповідно їхні матриці до об'єкту `TETROMINOES`.<br>
+
+- 2. **Функція `randomFigure`**:<br>
+     для випадкового вибору тетроміно.<br>
+
+- 3. **Перевірка на вихід за межі ігрового поля (функція `isOutsideOfGameboard`)**:<br>
+     для перевірки, чи тетроміно виходить за межі ігрового поля.<br>
+
+- 4. **Додано обробку клавіш**:<br>
+     Додано обробку клавіш для переміщення тетроміно вліво, вправо та вниз.<br>
+
+- 5. **Функція `drawTetromino`**: <br>
+     для відображення тетроміно на полі.<br>
+
+- 6. **Оновлено функцію `drawPlayfield`**: <br>
+     Дана ф-ція тепер динамічно відображає тетроміно на полі.<br>
+
 ##### Виправлення помилки у Функції генерування нового тетроміно:
 
 `const matrix = TETROMINOES[`O`];` замість `const matrix = TETROMINOES[0];`
@@ -718,17 +738,32 @@ function generateTetromino() {
 }
 ```
 
----
+##### Зміни у функції для малювання ігрового поля `drawPlayfield`
 
----
+[Попередня версія функції](#Зміни-у-функції-для-малювання-ігрового-поля-`drawPlayfield`)
 
-<br>
+Видалимо статичне знаходження фігури `playfield[7][6] = "O";`<br>
+та змінимо значення на "O": `const nameFigure = "L";`
 
----
+```js
+function drawPlayfield() {
+  for (let row = 0; row < PLAYFILED_ROWS; row++) {
+    for (let column = 0; column < PLAYFILED_COLUMNS; column++) {
+      if (!playfield[row][column]) continue;
+      const nameFigure = "O"; //! змінили захардкоджене значення на "O"
+      const cellIndex = convertPositionToIndex(row, column);
 
-Код тепер має вигляд:
+      cells[cellIndex].classList.add(nameFigure);
+    }
+  }
+}
+```
 
-##### Малювання активного тетроміно
+##### Визначаємо розміщення фігури через змінну `playfield`
+
+###### Додамо функцію для відображення тетроміно на полі `drawTetromino` :
+
+(малюємо активну фігуру)
 
 ```js
 function drawTetromino() {
@@ -749,3 +784,9 @@ function drawTetromino() {
   }
 }
 ```
+
+---
+
+<br>
+
+---
