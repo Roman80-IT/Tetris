@@ -1265,6 +1265,15 @@ function randomFigure(array) {
 Припустимо, що ми використовуємо масив з 7 елементів.
 Ймовірність потрапити у діапазон: `[0, 1) = 1/7 ≈ 0.142857`
 
+##### `generateTetromino()`
+
+Підставляємо змінні замість хардкоду:
+
+```js
+const nameTetro = randomFigure(TETROMINO_NAMES);
+const matrix = TETROMINOES[nameTetro];
+```
+
 <br>
 ```js
 ```

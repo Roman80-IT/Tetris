@@ -63,9 +63,10 @@ function randomFigure(array) {
 // GENERATION
 
 function generateTetromino() {
-  const nameTetro = TETROMINO_NAMES[1]; // Вибір імені тетроміно (поки зафіксуємо вибір першого елементу)
-  const matrix = TETROMINOES[`L`]; // Вибір матриці тетроміно // Вибір матриці тетроміно
-
+  // const nameTetro = TETROMINO_NAMES[1]; // Вибір імені тетроміно (поки зафіксуємо вибір першого елементу)
+  // const matrix = TETROMINOES[`L`]; // Вибір матриці тетроміно // Вибір матриці тетроміно
+  const nameTetro = randomFigure(TETROMINO_NAMES);
+  const matrix = TETROMINOES[nameTetro];
   const columnTetro = 4; // Початкове розміщення фігури - колонка
   const rowTetro = 5; //                                - рядок
 
