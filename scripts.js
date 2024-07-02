@@ -84,29 +84,50 @@ function generatePlayfield() {
 
   console.table(playfield);
 }
+
 // KEYBOARD
 
 document.addEventListener("keydown", onKeyDown);
 
 function onKeyDown(event) {
   if (event.key == "ArrowLeft") {
-    tetromino.column -= 1;
-
-    console.log(event); //! console.log -- тільки ArrowLeft
+    tetromino.column -= 1; // Рух вліво
+    if (isOutsideOfGameboard(tetromino.row, tetromino.column)) {
+      tetromino.column += 1; // Повернення назад, якщо вийшли за межі
+    }
   }
   if (event.key == "ArrowRight") {
-    tetromino.column += 1;
+    tetromino.column += 1; // Рух вправо
+    if (isOutsideOfGameboard(tetromino.row, tetromino.column)) {
+      tetromino.column -= 1; // Повернення назад, якщо вийшли за межі
+    }
   }
   if (event.key == "ArrowDown") {
-    tetromino.row += 1;
+    tetromino.row += 1; // Рух вниз
+    if (isOutsideOfGameboard(tetromino.row, tetromino.column)) {
+      tetromino.row -= 1; // Повернення назад, якщо вийшли за межі
+    }
   }
-  draw();
+  draw(); // Перерисовка поля та тетроміно
 }
 
 function draw() {
-  drawPlayfield();
-  cells.forEach((el) => el.removeAttribute("class"));
-  drawTetromino();
+  drawPlayfield(); // Відображення статичного ігрового поля
+  cells.forEach((el) => el.removeAttribute("class")); // Очищення попередніх класів
+  drawTetromino(); // Відображення активного тетроміно
+}
+
+// COLLISIONS
+
+// Перевірка виходу за межі ігрового поля
+function isOutsideOfGameboard(row, column) {
+  console.log(row);
+  console.log(PLAYFILED_ROWS - tetromino.matrix.length);
+  return (
+    column < 0 ||
+    column > PLAYFILED_COLUMNS - tetromino.matrix.length ||
+    row + tetromino.matrix.length > PLAYFILED_ROWS - 1
+  );
 }
 
 // DRAW

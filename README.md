@@ -1118,7 +1118,89 @@ function onKeyDown(event) {
 }
 ```
 
----
+##### Колізії (COLLISIONS)
+
+```js
+function isOutsideOfGameboard(row, column) {
+  console.log(row);
+  console.log(PLAYFILED_ROWS - tetromino.matrix.length);
+  return; //!   !!!типова помилка - return ; !!! не потрібно ' ; ';
+  column < 0 ||
+    column > PLAYFILED_COLUMNS - tetromino.matrix.length ||
+    row + tetromino.matrix.length > PLAYFILED_ROWS - 1;
+}
+```
+
+**Логіка роботи isOutsideOfGameboard:**<br><br>
+
+1. Перевірка координат тетроміно:<br><br>
+
+- `row`: Поточний рядок тетроміно.
+- `column`: Поточна колонка тетроміно.<br><br>
+
+2. Перевірка виходу за межі:<br><br>
+
+- `column < 0`: Якщо колонка менша за 0, тетроміно виходить за ліву межу поля.
+- `column > PLAYFILED_COLUMNS - tetromino.matrix.length`: Якщо колонка більша за кількість колонок мінус довжина матриці тетроміно, тетроміно виходить за праву межу поля.
+- `row + tetromino.matrix.length > PLAYFILED_ROWS - 1`: Якщо рядок плюс довжина матриці тетроміно більша за кількість рядків мінус 1, тетроміно виходить за нижню межу поля.<br><br>
+
+3. Повернення результату перевірки:<br><br>
+
+- Якщо будь-яка з умов є істинною, функція повертає `true`, що означає, що тетроміно виходить за межі ігрового поля.
+- Якщо жодна з умов не є істинною, функція повертає `false`.<br><br>
+
+##### Upgraid Обробка клавіш `onKeyDown`
+
+```js
+function onKeyDown(event) {
+  if (event.key == "ArrowLeft") {
+    tetromino.column -= 1; // Рух вліво
+    if (isOutsideOfGameboard(tetromino.row, tetromino.column)) {
+      tetromino.column += 1; // Повернення назад, якщо вийшли за межі
+    }
+  }
+  if (event.key == "ArrowRight") {
+    tetromino.column += 1; // Рух вправо
+    if (isOutsideOfGameboard(tetromino.row, tetromino.column)) {
+      tetromino.column -= 1; // Повернення назад, якщо вийшли за межі
+    }
+  }
+  if (event.key == "ArrowDown") {
+    tetromino.row += 1; // Рух вниз
+    if (isOutsideOfGameboard(tetromino.row, tetromino.column)) {
+      tetromino.row -= 1; // Повернення назад, якщо вийшли за межі
+    }
+  }
+  draw(); // Перерисовка поля та тетроміно
+}
+```
+
+**Логіка роботи `onKeyDown`:**<br><br>
+
+1. Слухач події `keydown`:<br><br>
+
+При натисканні будь-якої клавіші на клавіатурі викликається функція `onKeyDown`.<br><br>
+
+2. Обробка натискань клавіш:<br><br>
+
+- Якщо натиснута клавіша — стрілка вліво (`ArrowLeft`):
+  `tetromino.column -= 1`: Зменшується колонка тетроміно, тобто воно зміщується вліво.
+  Перевірка виходу за межі поля:
+  `isOutsideOfGameboard(tetromino.row, tetromino.column)`: Якщо тетроміно виходить за межі поля, колонка повертається назад (`tetromino.column += 1`).<br><br>
+
+- Якщо натиснута клавіша — стрілка вправо (`ArrowRight`):
+  `tetromino.column += 1`: Збільшується колонка тетроміно, тобто воно зміщується вправо.
+  Перевірка виходу за межі поля:
+  `isOutsideOfGameboard(tetromino.row, tetromino.column)`: Якщо тетроміно виходить за межі поля, колонка повертається назад (`tetromino.column -= 1`).<br><br>
+
+- Якщо натиснута клавіша — стрілка вниз (`ArrowDown`):
+  `tetromino.row += 1`: Збільшується рядок тетроміно, тобто воно зміщується вниз.
+  Перевірка виходу за межі поля:
+  `isOutsideOfGameboard(tetromino.row, tetromino.column)`: Якщо тетроміно виходить за межі поля, рядок повертається назад (`tetromino.row -= 1`).<br><br>
+
+3. Перемальовка тетроміно:<br><br>
+
+`draw()`: Викликається функція для перемальовки ігрового поля та тетроміно на нових позиціях.
 
 <br>
 ```js
