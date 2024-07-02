@@ -173,4 +173,4 @@ generatePlayfield();
 let cells = document.querySelectorAll(".tetris div");
 generateTetromino();
 
-draw(); // без виклику цієї ф-ції відмальовуватися фігура буде тільки після натискання на будь-яку клавішу
+draw();
