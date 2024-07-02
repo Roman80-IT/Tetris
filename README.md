@@ -1055,6 +1055,71 @@ drawPlayfield();
 drawTetromino();
 ```
 
-<br>
+#### STEP-6
+
+##### Обробка клавіш `onKeyDown`
+
+для переміщення тетроміно вліво, вправо та вниз.
+
+Додамо слухача подій до документа, на подію `keydown` - при натисканні будь-якої клавіші на клавіатурі, викликається функція `onKeyDown`.
+
+```js
+document.addEventListener("keydown", onKeyDown);
+
+function onKeyDown(event) {
+  console.log(event);
+}
+```
+
+З консолі можемо скопіювати код при натисканні на стрілки:
+
+```js
+document.addEventListener("keydown", onKeyDown);
+
+function onKeyDown(event) {
+  if (event.key == "ArrowLeft") {
+    tetromino.column -= 1;
+
+    console.log(event);
+  }
+}
+```
+
+##### Функція `draw()`
+
+Нічого не зміниться в браузері, потрібно перемалювати все поле, разом із фігурою:
+
+Для цього напишемо функцію:
+
+```js
+function draw() {
+  drawPlayfield();
+  cells.forEach((el) => el.removeAttribute("class"));
+  drawTetromino();
+}
+```
+
+##### Upgraid Обробка клавіш `onKeyDown`
+
+```js
+function onKeyDown(event) {
+  if (event.key == "ArrowLeft") {
+    tetromino.column -= 1;
+
+    console.log(event);
+  }
+  if (event.key == "ArrowRight") {
+    tetromino.column += 1;
+  }
+  if (event.key == "ArrowDown") {
+    tetromino.row += 1;
+  }
+  draw();
+}
+```
 
 ---
+
+<br>
+```js
+```

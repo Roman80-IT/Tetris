@@ -84,6 +84,30 @@ function generatePlayfield() {
 
   console.table(playfield);
 }
+// KEYBOARD
+
+document.addEventListener("keydown", onKeyDown);
+
+function onKeyDown(event) {
+  if (event.key == "ArrowLeft") {
+    tetromino.column -= 1;
+
+    console.log(event); //! console.log -- тільки ArrowLeft
+  }
+  if (event.key == "ArrowRight") {
+    tetromino.column += 1;
+  }
+  if (event.key == "ArrowDown") {
+    tetromino.row += 1;
+  }
+  draw();
+}
+
+function draw() {
+  drawPlayfield();
+  cells.forEach((el) => el.removeAttribute("class"));
+  drawTetromino();
+}
 
 // DRAW
 
