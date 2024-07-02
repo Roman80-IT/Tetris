@@ -55,11 +55,16 @@ function convertPositionToIndex(row, col) {
   return row * PLAYFILED_COLUMNS + col;
 }
 
+function randomFigure(array) {
+  const randomIndex = Math.floor(Math.random() * array.length);
+  return array[randomIndex];
+}
+
 // GENERATION
 
 function generateTetromino() {
-  const nameTetro = TETROMINO_NAMES[0]; // Вибір імені тетроміно (поки зафіксуємо вибір першого елементу)
-  const matrix = TETROMINOES[`O`]; // Вибір матриці тетроміно // Вибір матриці тетроміно
+  const nameTetro = TETROMINO_NAMES[1]; // Вибір імені тетроміно (поки зафіксуємо вибір першого елементу)
+  const matrix = TETROMINOES[`L`]; // Вибір матриці тетроміно // Вибір матриці тетроміно
 
   const columnTetro = 4; // Початкове розміщення фігури - колонка
   const rowTetro = 5; //                                - рядок
@@ -126,7 +131,7 @@ function isOutsideOfGameboard(row, column) {
   return (
     column < 0 ||
     column > PLAYFILED_COLUMNS - tetromino.matrix.length ||
-    row + tetromino.matrix.length > PLAYFILED_ROWS - 1
+    row + tetromino.matrix.length > PLAYFILED_ROWS
   );
 }
 

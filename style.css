@@ -32,3 +32,23 @@ body {
 .tetris .L {
   background: green;
 }
+
+.tetris .J {
+  background: purple;
+}
+
+.tetris .T {
+  background: blue;
+}
+
+.tetris .I {
+  background: yellow;
+}
+
+.tetris .S {
+  background: aqua;
+}
+
+.tetris .Z {
+  background: brown;
+}
