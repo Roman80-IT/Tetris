@@ -94,27 +94,62 @@ function generatePlayfield() {
 
 document.addEventListener("keydown", onKeyDown);
 
+// function onKeyDown(event) {
+//   if (event.key == "ArrowLeft") {
+//     tetromino.column -= 1; // Рух вліво
+//     // console.log("ArrowLeft");
+//     if (!isValid()) {
+//       tetromino.column += 1; // Повернення назад, якщо вийшли за межі
+//     }
+//   }
+//   if (event.key == "ArrowRight") {
+//     tetromino.column += 1; // Рух вправо
+//     if (!isValid()) {
+//       tetromino.column -= 1; // Повернення назад, якщо вийшли за межі
+//     }
+//   }
+//   if (event.key == "ArrowDown") {
+//     tetromino.row += 1; // Рух вниз
+//     if (!isValid()) {
+//       tetromino.row -= 1; // Повернення назад, якщо вийшли за межі
+//     }
+//   }
+//   draw(); // Перерисовка поля та тетроміно
+// }
+
 function onKeyDown(event) {
   if (event.key == "ArrowLeft") {
-    tetromino.column -= 1; // Рух вліво
-    // console.log("ArrowLeft");
-    if (!isValid()) {
-      tetromino.column += 1; // Повернення назад, якщо вийшли за межі
-    }
+    moveTetrominoLeft();
   }
   if (event.key == "ArrowRight") {
-    tetromino.column += 1; // Рух вправо
-    if (!isValid()) {
-      tetromino.column -= 1; // Повернення назад, якщо вийшли за межі
-    }
+    moveTetrominoRight();
   }
   if (event.key == "ArrowDown") {
-    tetromino.row += 1; // Рух вниз
-    if (!isValid()) {
-      tetromino.row -= 1; // Повернення назад, якщо вийшли за межі
-    }
+    moveTetrominoDown();
   }
-  draw(); // Перерисовка поля та тетроміно
+  draw();
+}
+
+function moveTetrominoDown() {
+  tetromino.row += 1;
+  if (!isValid()) {
+    tetromino.row -= 1;
+    placeTetromino();
+  }
+}
+
+function moveTetrominoLeft() {
+  tetromino.column -= 1;
+  if (!isValid()) {
+    tetromino.column += 1;
+  }
+}
+
+function moveTetrominoRight() {
+  tetromino.column += 1;
+  if (!isValid()) {
+    tetromino.column -= 1;
+  }
 }
 
 function draw() {

@@ -1635,6 +1635,70 @@ function draw() {
 - Якщо ф-ція `isValid` не має `return true` в кінці, вона нічого не повертає в такому випадку, - це означає повернення `undefined`. В результаті, логіка обробки натискань клавіш завжди буде вважати, що поточна позиція тетроміно недопустима, оскільки `undefined` в умовах `if (!isValid())` інтерпретується як `false`.
 - Тобто, навіть якщо позиція тетроміно допустима, `if (!isValid())` завжди повертає `true` (бо `!undefined` є `true`), і тетроміно повертається на попередню позицію.
 
+##### Ф-ція `moveTetromino`
+
+Винесемо код в окрему ф-цію:
+
+```js
+// function onKeyDown(event) {
+//   if (event.key == "ArrowLeft") {
+//     tetromino.column -= 1; // Рух вліво
+//     // console.log("ArrowLeft");
+//     if (!isValid()) {
+//       tetromino.column += 1; // Повернення назад, якщо вийшли за межі
+//     }
+//   }
+//   if (event.key == "ArrowRight") {
+//     tetromino.column += 1; // Рух вправо
+//     if (!isValid()) {
+//       tetromino.column -= 1; // Повернення назад, якщо вийшли за межі
+//     }
+//   }
+//   if (event.key == "ArrowDown") {
+//     tetromino.row += 1; // Рух вниз
+//     if (!isValid()) {
+//       tetromino.row -= 1; // Повернення назад, якщо вийшли за межі
+//     }
+//   }
+//   draw(); // Перерисовка поля та тетроміно
+// }
+
+function onKeyDown(event) {
+  if (event.key == "ArrowLeft") {
+    moveTetrominoLeft();
+  }
+  if (event.key == "ArrowRight") {
+    moveTetrominoRight();
+  }
+  if (event.key == "ArrowDown") {
+    moveTetrominoDown();
+  }
+  draw();
+}
+
+function moveTetrominoDown() {
+  tetromino.row += 1;
+  if (!isValid()) {
+    tetromino.row -= 1;
+    placeTetromino();
+  }
+}
+
+function moveTetrominoLeft() {
+  tetromino.column -= 1;
+  if (!isValid()) {
+    tetromino.column += 1;
+  }
+}
+
+function moveTetrominoRight() {
+  tetromino.column += 1;
+  if (!isValid()) {
+    tetromino.column -= 1;
+  }
+}
+```
+
 ---
 
   <br>
