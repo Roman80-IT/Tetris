@@ -138,6 +138,21 @@ function draw() {
 //* COLLISIONS
 
 // Перевірка валідності позиції тетроміно
+// function isValid() {
+//   const matrixSize = tetromino.matrix.length;
+//   for (let row = 0; row < matrixSize; row++) {
+//     for (let column = 0; column < matrixSize; column++) {
+//       if (isOutsideOfGameboard(row, column)) {
+//         return false;
+//       }
+//       if (hasCollisions(row, column)) {
+//         return false;
+//       }
+//     }
+//   }
+//   return true; // Додаємо повернення true, якщо все в порядку
+// }
+
 function isValid() {
   const matrixSize = tetromino.matrix.length;
   for (let row = 0; row < matrixSize; row++) {
@@ -145,8 +160,12 @@ function isValid() {
       if (isOutsideOfGameboard(row, column)) {
         return false;
       }
+      if (hasCollisions(row, column)) {
+        return false;
+      }
     }
   }
+
   return true; // Додаємо повернення true, якщо все в порядку
 }
 
@@ -157,6 +176,13 @@ function isOutsideOfGameboard(row, column) {
     (tetromino.row + row >= PLAYFILED_ROWS ||
       tetromino.column + column < 0 ||
       tetromino.column + column >= PLAYFILED_COLUMNS)
+  );
+}
+
+function hasCollisions(row, column) {
+  return (
+    tetromino.matrix[row][column] &&
+    playfield[tetromino.row + row]?.[tetromino.column + column]
   );
 }
 
@@ -189,7 +215,7 @@ function drawPlayfield() {
       const nameFigure = playfield[row][column];
       const cellIndex = convertPositionToIndex(row, column);
 
-      [cellIndex].classList.add(nameFigure);
+      cells[cellIndex].classList.add(nameFigure);
     }
   }
 }
