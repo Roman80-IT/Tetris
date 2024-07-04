@@ -94,29 +94,6 @@ function generatePlayfield() {
 
 document.addEventListener("keydown", onKeyDown);
 
-// function onKeyDown(event) {
-//   if (event.key == "ArrowLeft") {
-//     tetromino.column -= 1; // Рух вліво
-//     // console.log("ArrowLeft");
-//     if (!isValid()) {
-//       tetromino.column += 1; // Повернення назад, якщо вийшли за межі
-//     }
-//   }
-//   if (event.key == "ArrowRight") {
-//     tetromino.column += 1; // Рух вправо
-//     if (!isValid()) {
-//       tetromino.column -= 1; // Повернення назад, якщо вийшли за межі
-//     }
-//   }
-//   if (event.key == "ArrowDown") {
-//     tetromino.row += 1; // Рух вниз
-//     if (!isValid()) {
-//       tetromino.row -= 1; // Повернення назад, якщо вийшли за межі
-//     }
-//   }
-//   draw(); // Перерисовка поля та тетроміно
-// }
-
 function onKeyDown(event) {
   if (event.key == "ArrowLeft") {
     moveTetrominoLeft();
@@ -134,7 +111,7 @@ function moveTetrominoDown() {
   tetromino.row += 1;
   if (!isValid()) {
     tetromino.row -= 1;
-    placeTetromino();
+    placeTetromino(); // викликаємо цю ф-цію, коли досягнули дна ігрового поля
   }
 }
 
@@ -214,6 +191,20 @@ function drawPlayfield() {
       cells[cellIndex].classList.add(nameFigure);
     }
   }
+}
+
+function placeTetromino() {
+  const tetrominoMatrixSize = tetromino.matrix.length;
+  for (let row = 0; row < tetrominoMatrixSize; row++) {
+    for (let column = 0; column < tetrominoMatrixSize; column++) {
+      if (tetromino.matrix[row][column]) {
+        playfield[tetromino.row + row][tetromino.column + column] =
+          tetromino.name;
+      }
+    }
+  }
+  console.log(playfield);
+  generateTetromino();
 }
 
 generatePlayfield();
