@@ -185,10 +185,11 @@ function drawPlayfield() {
     for (let column = 0; column < PLAYFILED_COLUMNS; column++) {
       if (!playfield[row][column]) continue;
 
-      const nameFigure = tetromino.name;
+      //       const nameFigure = tetromino.name;
+      const nameFigure = playfield[row][column];
       const cellIndex = convertPositionToIndex(row, column);
 
-      cells[cellIndex].classList.add(nameFigure);
+      [cellIndex].classList.add(nameFigure);
     }
   }
 }
