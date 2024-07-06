@@ -5,6 +5,7 @@
 [урок 1](https://www.youtube.com/watch?v=hGEPkXBKoBM)
 [урок 2](https://www.youtube.com/watch?v=LmFyvtGnnk4)
 [урок 3](https://www.youtube.com/watch?v=gl-qRlQIZc4)
+[уроки](https://www.youtube.com/watch?v=hGEPkXBKoBM&list=PLOlyZEVllXBHBoDXwza-Jh-W8u1KQcriy)
 
 CSS:
 
@@ -1998,6 +1999,8 @@ cells[cellIndex].innerHTML = '<div class="filled"></div>';
 
 // showRotated = rotateMatrix(showRotated);
 ```
+
+#### STEP-8 / Lesson-4
 
 ---
 
