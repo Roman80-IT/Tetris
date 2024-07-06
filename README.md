@@ -2071,6 +2071,27 @@ function drawTetromino() {
 
 Ця функція дозволяє частинам тетроміно виходити за межі верхнього краю ігрового поля, але при цьому вони не відображаються і не викликають помилок у логіці гри.
 
+##### Зверстаємо поле для розрахунку балів гри
+
+Draw a field for calculating game points
+
+```html
+<div class="score">0</div>
+```
+
+```css
+.score {
+  font-size: 60px;
+  font-family: Arial, sans-serif;
+  font-weight: bold;
+
+  margin-left: 30px;
+  padding: 20px;
+  border: 10px solid white;
+  border-radius: 30px;
+}
+```
+
 ---
 
   <br>

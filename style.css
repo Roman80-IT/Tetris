@@ -17,6 +17,17 @@ body {
   grid-template-columns: repeat(10, auto);
 }
 
+.score {
+  font-size: 60px;
+  font-family: Arial, sans-serif;
+  margin-left: 30px;
+  border: 10px solid white;
+  padding: 20px;
+  border-radius: 30px;
+  /* background: gold; */
+  font-weight: bold;
+}
+
 .tetris div {
   height: min(4vh, 7vw);
   width: min(4vh, 7vw);
