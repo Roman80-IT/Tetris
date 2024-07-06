@@ -280,4 +280,16 @@ function placeTetromino() {
   generateTetromino();
 }
 
+function moveDown() {
+  moveTetrominoDown();
+  draw();
+  startLoop();
+}
+
+function startLoop() {
+  setTimeout(() => requestAnimationFrame(moveDown), 700);
+}
+
+startLoop();
+
 init();
