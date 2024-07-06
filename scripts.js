@@ -67,7 +67,7 @@ function generateTetromino() {
   const matrix = TETROMINOES[nameTetro];
 
   const columnTetro = Math.floor(PLAYFILED_COLUMNS / 2 - matrix.length / 2);
-  const rowTetro = 2; //                                - рядок
+  const rowTetro = -2; //                                - рядок
 
   tetromino = {
     name: nameTetro,
@@ -195,6 +195,10 @@ function isValid() {
   return true; // Додаємо повернення true, якщо все в порядку
 }
 
+function isOutsideOfTopGameboard(row) {
+  return tetromino.row + row < 0;
+}
+
 // Перевірка виходу за межі ігрового поля
 function isOutsideOfGameboard(row, column) {
   return (
@@ -224,6 +228,10 @@ function drawTetromino() {
       // const cellIndex = convertPositionToIndex(tetromino.row + row, tetromino.column + column);
       // cells[cellIndex].innerHTML = showRotated[row][column];
 
+      // Пропускаємо частини тетроміно, які знаходяться за межами верхнього краю
+      if (isOutsideOfTopGameboard(row)) {
+        continue;
+      }
       if (!tetromino.matrix[row][column]) {
         continue;
       }
