@@ -140,6 +140,14 @@ function draw() {
 
 //* ROTATE
 
+//? Код для прикладу алгоритму обертання фігур:
+
+// let showRotated = [
+//     [1,2,3],
+//     [4,5,6],
+//     [7,8,9]
+// ]
+
 function rotate() {
   rotateTetromino();
   draw();
@@ -212,6 +220,10 @@ function drawTetromino() {
 
   for (let row = 0; row < tetrominoMatrixSize; row++) {
     for (let column = 0; column < tetrominoMatrixSize; column++) {
+      // Код для прикладу алгоритму обертання фігур
+      // const cellIndex = convertPositionToIndex(tetromino.row + row, tetromino.column + column);
+      // cells[cellIndex].innerHTML = showRotated[row][column];
+
       if (!tetromino.matrix[row][column]) {
         continue;
       }
@@ -219,7 +231,7 @@ function drawTetromino() {
         tetromino.row + row,
         tetromino.column + column
       );
-      cells[cellIndex].classList.add(name); // Додаємо клас для клітинок, що відповідають активному тетроміно
+      cells[cellIndex].classList.add(name); // Додавання класу до клітинки
     }
   }
 }

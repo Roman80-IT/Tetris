@@ -1917,6 +1917,88 @@ function rotateMatrix(matrixTetromino) {
 
 Функція `rotateTetromino` перевіряє, чи є нова обернена матриця валідною для розміщення на полі. Якщо ні, тетроміно повертається до старої матриці.
 
+##### Приклад алгоритму обертання фігур
+
+```js
+function drawTetromino() {
+  const name = tetromino.name; // Отримання імені поточного тетроміно
+  const tetrominoMatrixSize = tetromino.matrix.length; // Визначення розміру матриці тетроміно
+
+  for (let row = 0; row < tetrominoMatrixSize; row++) {
+    for (let column = 0; column < tetrominoMatrixSize; column++) {
+      // Код для прикладу алгоритму обертання фігур
+      // const cellIndex = convertPositionToIndex(tetromino.row + row, tetromino.column + column);
+      // cells[cellIndex].innerHTML = showRotated[row][column];
+
+      if (!tetromino.matrix[row][column]) {
+        continue; // Пропуск клітинок, які не входять до фігури тетроміно
+      }
+      const cellIndex = convertPositionToIndex(
+        tetromino.row + row,
+        tetromino.column + column
+      );
+      cells[cellIndex].classList.add(name); // Додавання класу з ім'ям тетроміно до відповідної клітинки
+    }
+  }
+}
+```
+
+**Змінні:**
+
+- `const name = tetromino.name;`: Збереження імені поточного тетроміно у змінну name.
+- `const tetrominoMatrixSize = tetromino.matrix.length;`: Визначення розміру матриці поточного тетроміно.
+
+**Цикли:**
+
+- Зовнішній цикл по рядках: `for (let row = 0; row < tetrominoMatrixSize; row++)`
+  -- Ітерується по всіх рядках матриці тетроміно.
+- Внутрішній цикл по стовпцях: f`or (let column = 0; column < tetrominoMatrixSize; column++)`
+  -- Ітерується по всіх стовпцях матриці тетроміно.
+
+**Коментар щодо прикладу алгоритму обертання:**
+
+Закоментований код:
+
+```js
+// const cellIndex = convertPositionToIndex(tetromino.row + row, tetromino.column + column);
+// cells[cellIndex].innerHTML = showRotated[row][column];
+```
+
+- **Перший рядок:** Обчислення індексу клітинки в `DOM (HTML)` на основі поточної позиції тетроміно та позиції в матриці.
+- **Другий рядок:** Встановлення значення клітинки на основі оберненої матриці `showRotated`. Це може бути корисним для відображення чисел або іншої інформації для візуалізації обертання.
+
+`innerHTML` — це властивість `HTML-елемента`, що дозволяє змінювати або отримувати `HTML-код` всередині елемента. В даному випадку ми використовуємо його для додавання контенту до клітинки.
+Наприклад:
+
+```js
+cells[cellIndex].innerHTML = '<div class="filled"></div>';
+```
+
+**Умова:**
+`if (!tetromino.matrix[row][column]) { continue; }`
+Пропуск клітинок, які не є частиною тетроміно (містять значення `0`).
+
+**Обчислення індексу та додавання класу:**
+
+- `const cellIndex = convertPositionToIndex(tetromino.row + row, tetromino.column + column);`
+  -- Обчислення індексу клітинки в `DOM` на основі поточної позиції тетроміно та позиції в матриці.
+- `cells[cellIndex].classList.add(name);`
+  -- Додавання класу з ім'ям тетроміно до відповідної клітинки для відображення тетроміно на ігровому полі.
+
+**Приклад алгоритму обертання**
+
+Закоментований код в ф-ції `drawTetromino` надає можливість побачити, як виглядає матриця після обертання. Якщо розкоментувати цей код та додати до ф-ції обертання відповідну логіку, можна буде вивести значення оберненої матриці в клітинках, що допоможе зрозуміти процес обертання тетроміно.
+
+```js
+// let showRotated = [
+//     [1,2,3],
+//     [4,5,6],
+//     [7,8,9]
+// ]
+
+// showRotated = rotateMatrix(showRotated);
+```
+
 ---
 
   <br>
