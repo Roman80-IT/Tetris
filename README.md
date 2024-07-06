@@ -1860,6 +1860,63 @@ function hasCollisions(row, column) {
 
 Перевіряє чи існує рядок у `playfield` на позиції `tetromino.row + row`. Якщо цей рядок не існує (тобто `playfield[tetromino.row + row]` є `undefined`), вираз одразу поверне `undefined` і не буде намагатися отримати значення за індексом `[tetromino.column + column]`, що допомагає уникнути помилок.
 
+##### Обертання тетроміно `rotate()`
+
+```js
+function onKeyDown(event) {
+  if (event.key == "ArrowUp") {
+    rotate(); // Обертання тетроміно
+  }
+  if (event.key == "ArrowLeft") {
+    moveTetrominoLeft();
+  }
+  if (event.key == "ArrowRight") {
+    moveTetrominoRight();
+  }
+  if (event.key == "ArrowDown") {
+    moveTetrominoDown();
+  }
+  draw(); // Перемалювання ігрового поля
+}
+
+//* ROTATE
+
+function rotate() {
+  rotateTetromino();
+  draw();
+}
+
+function rotateTetromino() {
+  const oldMatrix = tetromino.matrix;
+  const rotatedMatrix = rotateMatrix(tetromino.matrix);
+  // showRotated = rotateMatrix(showRotated) // Код для прикладу алгоритму обертання фігур
+  tetromino.matrix = rotatedMatrix;
+  if (!isValid()) {
+    tetromino.matrix = oldMatrix;
+  }
+}
+
+function rotateMatrix(matrixTetromino) {
+  const N = matrixTetromino.length;
+  const rotateMatrix = [];
+
+  for (let i = 0; i < N; i++) {
+    rotateMatrix[i] = [];
+    for (let j = 0; j < N; j++) {
+      rotateMatrix[i][j] = matrixTetromino[N - j - 1][i]; // Обертання матриці на 90 градусів за годинниковою стрілкою
+    }
+  }
+
+  return rotateMatrix;
+}
+```
+
+Функція `rotateMatrix` обертає матрицю тетроміно на 90 градусів за годинниковою стрілкою. Для цього вона створює нову порожню матрицю та заповнює її значеннями з оригінальної матриці, відповідно до алгоритму обертання.
+
+При обертанні кожен елемент з позиції `(i, j)` в старій матриці переміщується на позицію `(j, N - i - 1)` в новій матриці.
+
+Функція `rotateTetromino` перевіряє, чи є нова обернена матриця валідною для розміщення на полі. Якщо ні, тетроміно повертається до старої матриці.
+
 ---
 
   <br>

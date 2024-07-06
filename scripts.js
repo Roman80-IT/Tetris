@@ -95,6 +95,9 @@ function generatePlayfield() {
 document.addEventListener("keydown", onKeyDown);
 
 function onKeyDown(event) {
+  if (event.key == "ArrowUp") {
+    rotate(); // Обертання тетроміно
+  }
   if (event.key == "ArrowLeft") {
     moveTetrominoLeft();
   }
@@ -104,7 +107,7 @@ function onKeyDown(event) {
   if (event.key == "ArrowDown") {
     moveTetrominoDown();
   }
-  draw();
+  draw(); // Перемалювання ігрового поля
 }
 
 function moveTetrominoDown() {
@@ -135,24 +138,40 @@ function draw() {
   drawTetromino(); // Відображення активного тетроміно
 }
 
+//* ROTATE
+
+function rotate() {
+  rotateTetromino();
+  draw();
+}
+
+function rotateTetromino() {
+  const oldMatrix = tetromino.matrix;
+  const rotatedMatrix = rotateMatrix(tetromino.matrix);
+  // showRotated = rotateMatrix(showRotated) // Код для прикладу алгоритму обертання фігур
+  tetromino.matrix = rotatedMatrix;
+  if (!isValid()) {
+    tetromino.matrix = oldMatrix;
+  }
+}
+
+function rotateMatrix(matrixTetromino) {
+  const N = matrixTetromino.length;
+  const rotateMatrix = [];
+
+  for (let i = 0; i < N; i++) {
+    rotateMatrix[i] = [];
+    for (let j = 0; j < N; j++) {
+      rotateMatrix[i][j] = matrixTetromino[N - j - 1][i]; // Обертання матриці на 90 градусів за годинниковою стрілкою
+    }
+  }
+
+  return rotateMatrix;
+}
+
 //* COLLISIONS
 
 // Перевірка валідності позиції тетроміно
-// function isValid() {
-//   const matrixSize = tetromino.matrix.length;
-//   for (let row = 0; row < matrixSize; row++) {
-//     for (let column = 0; column < matrixSize; column++) {
-//       if (isOutsideOfGameboard(row, column)) {
-//         return false;
-//       }
-//       if (hasCollisions(row, column)) {
-//         return false;
-//       }
-//     }
-//   }
-//   return true; // Додаємо повернення true, якщо все в порядку
-// }
-
 function isValid() {
   const matrixSize = tetromino.matrix.length;
   for (let row = 0; row < matrixSize; row++) {
@@ -165,7 +184,6 @@ function isValid() {
       }
     }
   }
-
   return true; // Додаємо повернення true, якщо все в порядку
 }
 
