@@ -2092,6 +2092,25 @@ Draw a field for calculating game points
 }
 ```
 
+##### Ф-ція init()
+
+Ініціалізація гри в даному коді реалізована за допомогою функції `init()`.
+
+```js
+function init() {
+  generatePlayfield();
+  cells = document.querySelectorAll(".tetris div");
+  generateTetromino();
+  draw();
+}
+```
+
+Не забуваємо викликати її в кінці, після визначення всіх необхідних функцій і структур даних.
+
+```js
+init();
+```
+
 ---
 
   <br>

@@ -1,6 +1,7 @@
 const PLAYFILED_COLUMNS = 10;
 const PLAYFILED_ROWS = 20;
 let playfield;
+let cells;
 
 const TETROMINO_NAMES = ["O", "L", "J", "S", "Z", "I", "T"];
 
@@ -50,6 +51,13 @@ let tetromino = {
 };
 
 //* COMMON
+
+function init() {
+  generatePlayfield();
+  cells = document.querySelectorAll(".tetris div");
+  generateTetromino();
+  draw(); // без виклику цієї ф-ції відмальовуватися фігура буде тільки після натискання на будь-яку клавішу
+}
 
 function convertPositionToIndex(row, col) {
   return row * PLAYFILED_COLUMNS + col;
@@ -272,8 +280,4 @@ function placeTetromino() {
   generateTetromino();
 }
 
-generatePlayfield();
-let cells = document.querySelectorAll(".tetris div");
-generateTetromino();
-
-draw(); // без виклику цієї ф-ції відмальовуватися фігура буде тільки після натискання на будь-яку клавішу
+init();
