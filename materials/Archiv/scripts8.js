@@ -292,6 +292,4 @@ function startLoop() {
   setTimeout(() => requestAnimationFrame(moveDown), 700);
 }
 
-startLoop();
-
 init();

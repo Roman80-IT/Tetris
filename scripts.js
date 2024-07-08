@@ -3,6 +3,9 @@ const PLAYFILED_ROWS = 20;
 let playfield;
 let cells;
 
+let isPaused = false;
+let timedId;
+
 const TETROMINO_NAMES = ["O", "L", "J", "S", "Z", "I", "T"];
 
 const TETROMINOES = {
@@ -148,6 +151,16 @@ function draw() {
   drawTetromino(); // Відображення активного тетроміно
 }
 
+function togglePaused() {
+  if (isPaused) {
+    startLoop();
+  } else {
+    stopLoop();
+  }
+
+  isPaused = !isPaused;
+}
+
 //* ROTATE
 
 //? Код для прикладу алгоритму обертання фігур:
@@ -288,10 +301,18 @@ function moveDown() {
   startLoop();
 }
 
+// function startLoop() {
+//   setTimeout(() => requestAnimationFrame(moveDown), 700);
+// }
+
 function startLoop() {
-  setTimeout(() => requestAnimationFrame(moveDown), 700);
+  timedId = setTimeout(() => requestAnimationFrame(moveDown), 700);
 }
 
-startLoop();
+function stopLoop() {
+  clearTimeout(timedId);
+
+  timedId = null;
+}
 
 init();

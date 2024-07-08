@@ -2248,6 +2248,277 @@ moveDown();
 
 Виклик `moveDown` у ф-ції `init` забезпечує, що гра одразу після запуску починає працювати, а тетроміно починає рухатися вниз автоматично. Це створює безперервний ігровий процес, який гравець може контролювати за допомогою клавіш, але який не вимагає від нього початкового натискання для запуску гри.
 
+#### STEP-9 / Lesson-5
+
+1. **Пауза гри:**
+
+Реалізовано ф-цію `togglePaused()`, яка дозволяє поставити гру на паузу і зняти з паузи за допомогою клавіші `Escape`. Змінна `isPaused` використовується для перевірки, чи гра на паузі.
+
+2. **Гра закінчена:**
+
+Перевірка, чи гра закінчена, за допомогою змінної `isGameOver`. Якщо гравець не зміг розмістити новий тетроміно, гра закінчується і відображається накладка (`overlay`).
+
+3. **Підрахунок очок та перезапуск гри:**
+
+Відстежуємо очки за допомогою змінної `score` і елементу `scoreElement`. Також є кнопка для перезапуску гри `btnRestart`, яка очищує поле і запускає гру заново.
+
+4. **Швидке падіння тетроміно:**
+
+Додана ф-ція `dropTetrominoDown()`, яка дозволяє тетроміно падати до нижньої межі гри одним натисканням пробілу.
+
+5. **Видалення заповнених рядків:**
+
+Реалізовані ф-ції `findFilledRows()`, `removeFillRow()`, і `dropRowsAbove()`, які видаляють повністю заповнені рядки і зрушують верхні рядки вниз. Також викликається ф-ція `countScore()`, яка додає очки за видалені рядки.
+
+6. **Ініціалізація та основний цикл гри:**
+
+функція `moveDown()` викликає `stopLoop()` і `startLoop()` для оновлення ігрового циклу. Також додана функція `stopLoop()`, яка зупиняє ігровий цикл.
+Перший файл має спрощений цикл гри з використанням `requestAnimationFrame` без функціональності зупинки циклу.
+
+##### Що добавлено:
+
+```js
+let isPaused = false; // Додаємо змінну, яка відповідає за паузу гри
+let timedId; // Змінна для збереження ідентифікатора таймера
+let isGameOver = false; // Змінна для перевірки стану гри (чи завершена гра)
+let overlay = document.querySelector(".overlay"); // Елемент, який використовується для накладання при завершенні гри
+let scoreElement = document.querySelector(".score"); // Елемент для відображення рахунку гри
+let btnRestart = document.querySelector(".btn-restart"); // Кнопка для перезапуску гри
+let score = 0; // Початковий рахунок гри
+
+// Функція ініціалізації гри
+function init() {
+  score = 0; // Скидання рахунку до нуля
+  scoreElement.innerHTML = 0; // Оновлення відображення рахунку
+  isGameOver = false; // Скидання стану гри до незавершеного
+  generatePlayfield(); // Генерація ігрового поля
+  cells = document.querySelectorAll(".tetris div"); // Отримання всіх клітинок ігрового поля
+  generateTetromino(); // Генерація нового тетроміно
+
+  moveDown(); // Початок руху тетроміно вниз
+}
+
+// Обробка натискання кнопки перезапуску
+btnRestart.addEventListener("click", function () {
+  document.querySelector(".tetris").innerHTML = ""; // Очищення ігрового поля
+  overlay.style.display = "none"; // Сховати накладання
+
+  init(); // Повторна ініціалізація гри
+});
+
+// Обробка натискання клавіш на клавіатурі
+document.addEventListener("keydown", onKeyDown);
+
+function onKeyDown(event) {
+  if (event.key == "Escape") {
+    togglePaused(); // Переключення паузи
+  }
+  if (!isPaused) {
+    // Якщо гра не на паузі
+    if (event.key == " ") {
+      dropTetrominoDown(); // Миттєве опускання тетроміно вниз
+    }
+    if (event.key == "ArrowUp") {
+      rotate(); // Обертання тетроміно
+    }
+    if (event.key == "ArrowLeft") {
+      moveTetrominoLeft(); // Рух тетроміно вліво
+    }
+    if (event.key == "ArrowRight") {
+      moveTetrominoRight(); // Рух тетроміно вправо
+    }
+    if (event.key == "ArrowDown") {
+      moveTetrominoDown(); // Рух тетроміно вниз
+    }
+  }
+  draw(); // Перемалювання ігрового поля
+}
+
+// Функція миттєвого опускання тетроміно вниз
+function dropTetrominoDown() {
+  while (isValid()) {
+    tetromino.row++;
+  }
+
+  tetromino.row--;
+}
+
+// Функція переключення паузи гри
+function togglePaused() {
+  if (isPaused) {
+    startLoop(); // Запуск таймера гри
+  } else {
+    stopLoop(); // Зупинка таймера гри
+  }
+
+  isPaused = !isPaused; // Перемикання стану паузи
+}
+
+// Функція підрахунку очок за знищені рядки
+function countScore(destroyRows) {
+  if (destroyRows == 1) {
+    score += 10; // Додавання 10 очок за один рядок
+  }
+  if (destroyRows == 2) {
+    score += 20; // Додавання 20 очок за два рядки
+  }
+  if (destroyRows == 3) {
+    score += 50; // Додавання 50 очок за три рядки
+  }
+  if (destroyRows == 4) {
+    score += 100; // Додавання 100 очок за чотири рядки
+  }
+
+  scoreElement.innerHTML = score; // Оновлення відображення рахунку
+}
+
+// Функція розміщення тетроміно на ігровому полі
+function placeTetromino() {
+  const tetrominoMatrixSize = tetromino.matrix.length;
+  for (let row = 0; row < tetrominoMatrixSize; row++) {
+    for (let column = 0; column < tetrominoMatrixSize; column++) {
+      if (isOutsideOfTopGameboard(row)) {
+        isGameOver = true; // Встановлення стану завершення гри
+        overlay.style.display = "flex"; // Відображення накладання
+        return;
+      }
+      if (tetromino.matrix[row][column]) {
+        playfield[tetromino.row + row][tetromino.column + column] =
+          tetromino.name; // Розміщення тетроміно на ігровому полі
+      }
+    }
+  }
+  let filledRows = findFilledRows(); // Знаходження заповнених рядків
+  removeFillRow(filledRows); // Видалення заповнених рядків
+  countScore(filledRows.length); // Підрахунок очок за знищені рядки
+  generateTetromino(); // Генерація нового тетроміно
+}
+
+// Функція знаходження заповнених рядків
+function findFilledRows() {
+  const fillRows = [];
+
+  for (let row = 0; row < PLAYFILED_ROWS; row++) {
+    let filledColumns = 0;
+    for (let column = 0; column < PLAYFILED_COLUMNS; column++) {
+      if (playfield[row][column] != 0) {
+        filledColumns++;
+      }
+    }
+    if (PLAYFILED_COLUMNS == filledColumns) {
+      fillRows.push(row); // Додавання заповненого рядка до списку
+    }
+  }
+
+  return fillRows;
+}
+
+// Функція видалення заповнених рядків
+function removeFillRow(filledRows) {
+  for (let i = 0; i < filledRows.length; i++) {
+    const row = filledRows[i];
+    dropRowsAbove(row); // Опускання рядків, що знаходяться вище заповненого рядка
+  }
+}
+
+// Функція опускання рядків, що знаходяться вище заданого рядка
+function dropRowsAbove(rowDelete) {
+  for (let row = rowDelete; row > 0; row--) {
+    playfield[row] = playfield[row - 1]; // Копіювання рядка з вище розташованого рядка
+  }
+  playfield[0] = new Array(PLAYFILED_COLUMNS).fill(0); // Очищення верхнього рядка
+}
+
+// Функція запуску таймера гри
+function startLoop() {
+  timedId = setTimeout(() => requestAnimationFrame(moveDown), 700);
+}
+
+// Функція зупинки таймера гри
+function stopLoop() {
+  clearTimeout(timedId);
+  timedId = null;
+}
+```
+
+##### Пауза гри
+
+Добавимо змінну і відразу пропишемо логічне `НІ`:
+
+```js
+let isPaused = false;
+```
+
+Напишемо `ф-цію - "перемикач"`:
+
+```js
+function togglePaused() {
+  isPaused = !isPaused;
+}
+```
+
+Для реалізації умов, які необхідно ще буде прописати в ній, напишемо ще одну ф-цію:
+
+###### `stopLoop()` та змінна `timedId`
+
+```js
+// Введемо в код нову змінну:
+let timedId;
+
+// Ф-ція stopLoop():
+function stopLoop() {
+  clearTimeout(timedId);
+
+  timedId = null;
+}
+```
+
+Ця ф-ція виконує дві основні дії:
+
+1. Зупинка таймера гри:
+
+```js
+clearTimeout(timedId);
+```
+
+`clearTimeout` є вбудованою ф-цією **JavaScript**, яка зупиняє виконання ф-ції, запланованої за допомогою `setTimeout`. Функція `setTimeout` повертає унікальний ідентифікатор таймера (`timedId`), який передається в `clearTimeout` для зупинки цього таймера. Тобто, якщо був запущений таймер, його виконання буде зупинено, і ф-ція, яка мала б виконатися після закінчення часу, не виконається.
+
+2. Очищення змінної таймера:
+
+```js
+timedId = null;
+```
+
+Після зупинки таймера, змінна `timedId` встановлюється в `null`. Це робиться для того, щоб показати, що в даний момент таймер не запущений і не існує активного таймера. Очищення змінної може бути корисним для перевірки стану гри (наприклад, для перевірки, чи потрібно запустити новий таймер, чи вже є активний таймер).
+
+Таким чином, функція `stopLoop()` зупиняє поточний таймер гри і очищає змінну, яка зберігає ідентифікатор цього таймера. Це корисно, коли потрібно призупинити гру (наприклад, при натисканні кнопки паузи) або завершити гру, щоб зупинити рух тетроміно.
+
+###### `startLoop()`
+
+```js
+// function startLoop() {
+//   setTimeout(() => requestAnimationFrame(moveDown), 700);
+// }
+
+function startLoop() {
+  timedId = setTimeout(() => requestAnimationFrame(moveDown), 700);
+}
+```
+
+###### Продовжимо написання `togglePaused()`
+
+```js
+function togglePaused() {
+  if (isPaused) {
+    startLoop();
+  } else {
+    stopLoop();
+  }
+
+  isPaused = !isPaused;
+}
+```
+
 ---
 
   <br>
