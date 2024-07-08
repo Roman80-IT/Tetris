@@ -5,7 +5,6 @@
 body {
   background: linear-gradient(90deg, rgb(18, 13, 164), rgb(98, 255, 0));
   height: 100vh;
-
   display: flex;
   justify-content: center;
   align-items: center;
@@ -26,6 +25,8 @@ body {
   border-radius: 30px;
   /* background: gold; */
   font-weight: bold;
+  min-width: 80px;
+  text-align: center;
 }
 
 .tetris div {
@@ -62,4 +63,27 @@ body {
 
 .tetris .Z {
   background: brown;
+}
+
+.overlay {
+  background: rgba(62, 0, 139, 0.5);
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: none;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn-restart {
+  cursor: pointer;
+  width: 400px;
+  height: 200px;
+  font-size: 80px;
+  border-radius: 20px;
+  border: 15px solid #57006b;
+  background: #c60bf0;
+  color: #fff;
 }
