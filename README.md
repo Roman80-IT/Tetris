@@ -2505,6 +2505,65 @@ function startLoop() {
 }
 ```
 
+###### Upgrade `moveDown()`
+
+Добавлено виклик `stopLoop();` перед викликом `startLoop();`
+
+```js
+function moveDown() {
+  moveTetrominoDown(); // Переміщує тетроміно вниз на один рядок
+  draw(); // Оновлює відображення ігрового поля
+
+  stopLoop(); // Зупиняє поточний таймер
+  startLoop(); // Запускає новий таймер
+}
+```
+
+##### Upgrade `onKeyDown(event)`
+
+```js
+// function onKeyDown(event) {
+//   if (event.key == "ArrowUp") {
+//     rotate(); // Обертання тетроміно
+//   }
+//   if (event.key == "ArrowLeft") {
+//     moveTetrominoLeft();
+//   }
+//   if (event.key == "ArrowRight") {
+//     moveTetrominoRight();
+//   }
+//   if (event.key == "ArrowDown") {
+//     moveTetrominoDown();
+//   }
+//   draw(); // Перемалювання ігрового поля
+// }
+
+function onKeyDown(event) {
+  // console.log(event);
+  if (event.key == "Escape") {
+    togglePaused();
+  }
+  if (!isPaused) {
+    if (event.key == " ") {
+      dropTetrominoDown();
+    }
+    if (event.key == "ArrowUp") {
+      rotate();
+    }
+    if (event.key == "ArrowLeft") {
+      moveTetrominoLeft();
+    }
+    if (event.key == "ArrowRight") {
+      moveTetrominoRight();
+    }
+    if (event.key == "ArrowDown") {
+      moveTetrominoDown();
+    }
+  }
+  draw();
+}
+```
+
 ###### Продовжимо написання `togglePaused()`
 
 ```js
@@ -2516,6 +2575,18 @@ function togglePaused() {
   }
 
   isPaused = !isPaused;
+}
+```
+
+###### Швидке падіння `dropTetrominoDown()`
+
+```js
+function dropTetrominoDown() {
+  while (isValid()) {
+    tetromino.row++;
+  }
+
+  tetromino.row--;
 }
 ```
 

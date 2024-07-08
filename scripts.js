@@ -107,20 +107,45 @@ function generatePlayfield() {
 
 document.addEventListener("keydown", onKeyDown);
 
+// function onKeyDown(event) {
+//   if (event.key == "ArrowUp") {
+//     rotate(); // Обертання тетроміно
+//   }
+//   if (event.key == "ArrowLeft") {
+//     moveTetrominoLeft();
+//   }
+//   if (event.key == "ArrowRight") {
+//     moveTetrominoRight();
+//   }
+//   if (event.key == "ArrowDown") {
+//     moveTetrominoDown();
+//   }
+//   draw(); // Перемалювання ігрового поля
+// }
+
 function onKeyDown(event) {
-  if (event.key == "ArrowUp") {
-    rotate(); // Обертання тетроміно
+  // console.log(event);
+  if (event.key == "Escape") {
+    togglePaused();
   }
-  if (event.key == "ArrowLeft") {
-    moveTetrominoLeft();
+  if (!isPaused) {
+    if (event.key == " ") {
+      dropTetrominoDown();
+    }
+    if (event.key == "ArrowUp") {
+      rotate();
+    }
+    if (event.key == "ArrowLeft") {
+      moveTetrominoLeft();
+    }
+    if (event.key == "ArrowRight") {
+      moveTetrominoRight();
+    }
+    if (event.key == "ArrowDown") {
+      moveTetrominoDown();
+    }
   }
-  if (event.key == "ArrowRight") {
-    moveTetrominoRight();
-  }
-  if (event.key == "ArrowDown") {
-    moveTetrominoDown();
-  }
-  draw(); // Перемалювання ігрового поля
+  draw();
 }
 
 function moveTetrominoDown() {
@@ -149,6 +174,14 @@ function draw() {
   cells.forEach((el) => el.removeAttribute("class")); // Очищення попередніх класів
   drawPlayfield(); // Відображення статичного ігрового поля
   drawTetromino(); // Відображення активного тетроміно
+}
+
+function dropTetrominoDown() {
+  while (isValid()) {
+    tetromino.row++;
+  }
+
+  tetromino.row--;
 }
 
 function togglePaused() {
@@ -298,6 +331,8 @@ function placeTetromino() {
 function moveDown() {
   moveTetrominoDown();
   draw();
+
+  stopLoop();
   startLoop();
 }
 
